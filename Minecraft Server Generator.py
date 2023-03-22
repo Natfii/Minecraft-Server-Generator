@@ -36,10 +36,12 @@ def getPaper():
         print("Error getting Paper: Invalid download or no connection can be made")
         return
     
-
+def getVanilla():
+    print("oof")
 
 
 def main():
+
     jarType = ''
     print("Choose a Server Type: \n1. Paper \n2. Vanilla")
     serverType = input()
@@ -51,8 +53,26 @@ def main():
         print("Vanilla Selected")
         jarType = 'vanilla'
     
-    print("Installing...")
-    subprocess.call(['java', '-Xmx1024M', '-Xms1024M', '-jar', jarType + '.jar', 'nogui'])
+    try:
+        print("Installing...")
+        subprocess.call(['java', '-Xmx1024M', '-Xms1024M', '-jar', jarType + '.jar', 'nogui'])
+
+        print("Server installed, accepting EULA")
+        with open('eula.txt', 'r') as file:
+            data = file.readlines()
+            data[2] = 'eula=true'
+        with open('eula.txt', 'w') as file:
+            file.writelines(data)    
+
+        print("Creating start.sh")
+        with open('start.sh', 'w') as file:
+            file.write('java -Xmx1024M -Xms1024M -jar ' + jarType + '.jar nogui')
+
+        print("Install finished, run start.sh to start the server. Additional server arguments can be added to the start.sh file.") 
+
+    except:
+        print("Error installing server")
+        return
 
 
 if __name__ == "__main__":
