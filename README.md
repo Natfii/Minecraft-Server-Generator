@@ -8,6 +8,6 @@ Does NOT download required java versions or install plugins (yet...)
 
 # Supported Server Types
 
-Vanilla
+Vanilla (soon)
 
 Paper 
